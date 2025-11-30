@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tukaram Gore — Unrejectable Portfolio</title>
+  <style>
+    * {margin:0;padding:0;box-sizing:border-box;font-family: 'Poppins', sans-serif;}
+    body {background:#050505;color:white;overflow-x:hidden;}
+
+    /* 🔥 Futuristic Grid Background */
+    body::before {
+      content:"";
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background:radial-gradient(circle at center,#111 0%,#050505 70%);
+      z-index:-3;
+    }
+
+    canvas#gridBG {
+      position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;opacity:0.6;
+    }
+
+    /* 🔥 Floating Neon Lines */
+    .neon-line {
+      position:absolute;width:2px;height:120px;background:linear-gradient(#00eaff,#0088ff,transparent);
+      animation:drop 6s linear infinite;
+      opacity:0.5;
+    }
+    @keyframes drop {0%{transform:translateY(-150px);}100%{transform:translateY(110vh);}}
+
+    /* HEADER */
+    header {padding:80px 5%;text-align:center;}
+    header h1 {font-size:3.5rem;font-weight:900;background:linear-gradient(90deg,#00f0ff,#00ffc8);-webkit-background-clip:text;color:transparent;}
+    header p {margin-top:10px;font-size:1.2rem;opacity:0.8;}
+
+    /* SECTION WRAPPER */
+    section {padding:100px 10%;position:relative;}
+
+    .title {font-size:2.5rem;font-weight:800;margin-bottom:30px;color:#00ffe7;}
+
+    /* Skill Orbs */
+    .skills-container {display:flex;flex-wrap:wrap;gap:25px;justify-content:center;}
+    .orb {
+      width:140px;height:140px;border-radius:50%;display:flex;justify-content:center;align-items:center;
+      font-weight:700;font-size:1.2rem;background:radial-gradient(circle,#00ffe772,#0099ff80);
+      box-shadow:0 0 25px #00ffee80 inset, 0 0 25px #00eeff;
+      animation:float 4s ease-in-out infinite;
+    }
+    @keyframes float {0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)}}
+
+    /* PROJECT CARDS */
+    .projects {display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;}
+    .card {
+      background:#0b0b0b;border:1px solid #00ffee30;padding:25px;border-radius:18px;
+      box-shadow:0 0 15px #00ffee40;transition:0.4s;position:relative;overflow:hidden;
+    }
+    .card:hover {transform:translateY(-10px);box-shadow:0 0 35px #00ffee80;}
+
+    .card h3 {color:#00ffe7;font-size:1.6rem;margin-bottom:10px;}
+
+    /* CONTACT */
+    .contact-box {margin-top:40px;padding:30px;background:#0c0c0c;border:1px solid #00ffee30;border-radius:15px;}
+    .contact-box p {margin-bottom:10px;}
+    .cta-btn {
+      margin-top:20px;padding:15px 30px;font-size:1.2rem;border:none;border-radius:10px;
+      background:linear-gradient(90deg,#00f0ff,#00ffc8);color:#000;font-weight:700;cursor:pointer;
+      transition:0.3s;
+    }
+    .cta-btn:hover {transform:scale(1.08);}    
+  </style>
+</head>
+<body>
+
+<canvas id="gridBG"></canvas>
+
+<!-- 🔥 NEON LINES CREATED VIA JS -->
+<div id="neonContainer"></div>
+
+<header>
+  <h1>Tukaram Gore</h1>
+  <p>AI Developer • Java Specialist • Future Google Engineer</p>
+</header>
+
+<section>
+  <h2 class="title">Skills</h2>
+  <div class="skills-container">
+    <div class="orb">Java</div>
+    <div class="orb">Android</div>
+    <div class="orb">GitHub</div>
+    <div class="orb">c basics</div>
+  </div>
+</section>
+
+<section>
+  <h2 class="title">Projects</h2>
+  <div class="projects">
+    <div class="card">
+      <h3>VoxMentor — AI Interview Coach</h3>
+      <p>AI voice cloning + offline interview assistant. Unique project built with real use-case impact.</p>
+    </div>
+
+    <div class="card">
+      <h3>CodeSpace Analyzer</h3>
+      <p>Smart code evaluator with complexity + error visualization.</p>
+    </div>
+
+    <div class="card">
+      <h3>Full Coding Platform</h3>
+      <p>Complete system with judge, login, test-cases & submissions.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="title">Contact</h2>
+  <div class="contact-box">
+    <p>📞 7420812179</p>
+    <p>📧 goretukaram62@gmail.com</p>
+    <p>🔗 GitHub: tr285</p>
+    <button class="cta-btn">Download Resume</button>
+  </div>
+</section>
+
+<script>
+  // 🌟 Futuristic Matrix Grid
+  const c = document.getElementById("gridBG");
+  const ctx = c.getContext("2d");
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+
+  const cols = Math.floor(c.width / 20);
+  const ypos = Array(cols).fill(0);
+
+  function matrix() {
+    ctx.fillStyle = "rgba(0,0,0,0.08)";
+    ctx.fillRect(0, 0, c.width, c.height);
+
+    ctx.fillStyle = "#00ffee";
+    ctx.font = "16px monospace";
+
+    ypos.forEach((y, ind) => {
+      const text = String.fromCharCode(0x30A0 + Math.random() * 97);
+      ctx.fillText(text, ind * 20, y);
+
+      if (y > c.height + Math.random() * 10000) ypos[ind] = 0;
+      else ypos[ind] = y + 20;
+    });
+  }
+
+  setInterval(matrix, 60);
+
+  // 🔥 Neon falling lines
+  const neonContainer = document.getElementById("neonContainer");
+  for (let i = 0; i < 50; i++) {
+    const line = document.createElement("div");
+    line.className = "neon-line";
+    line.style.left = Math.random() * 100 + "vw";
+    line.style.animationDelay = Math.random() * 5 + "s";
+    line.style.height = 80 + Math.random() * 150 + "px";
+    neonContainer.appendChild(line);
+  }
+</script>
+
+</body>
+</html>
